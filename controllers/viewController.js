@@ -127,7 +127,7 @@ exports.getAbout = (req, res) => {
 };
 
 exports.getContact = async (req, res) => {
-  res.render('contact', { formActionUrl: '/submit-contact-form' });
+  res.render('Contact', { formActionUrl: '/submit-contact-form' });
 };
 // Trang Login
 exports.getLogin = (req, res) => {
