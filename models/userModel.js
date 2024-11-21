@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 
 const userSchema = new mongoose.Schema(
   {
@@ -45,7 +45,7 @@ userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
 
   // Hash the password with cost of 12
-  this.password = await bcrypt.hash(this.password, 12);
+  this.password = await bcryptjs.hash(this.password, 12);
 
   // Delete passwordConfirm field
   this.passwordConfirm = undefined;
@@ -62,13 +62,13 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-// candidatePassword: password are input from client(not bcrypt)
+// candidatePassword: password are input from client(not bcryptjs)
 // userPassword: password are hashed which are stored in the database
 userSchema.methods.correctPassword = async (
   candidatePassword,
   userPassword
 ) => {
-  return await bcrypt.compare(candidatePassword, userPassword);
+  return await bcryptjs.compare(candidatePassword, userPassword);
 };
 
 // Phương thức để kiểm tra xem mật khẩu đã thay đổi sau khi token được phát hành chưa
