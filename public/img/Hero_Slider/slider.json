@@ -1,0 +1,44 @@
+{
+  "heroSlider": [
+    {
+      "id": 1,
+      "title": "Discover Our Latest Collection",
+      "subtitle": "Elevate Your Living Space with Our New Arrivals",
+      "image": "/img/Hero_Slider/images/01.jpg",
+      "link": "/new-arrivals",
+      "buttonText": "Shop Now"
+    },
+    {
+      "id": 2,
+      "title": "Summer Sale",
+      "subtitle": "Up to 50% Off on Selected Items",
+      "image": "/img/Hero_Slider/images/02.jpg",
+      "link": "/sale",
+      "buttonText": "Grab the Deal"
+    },
+    {
+      "id": 3,
+      "title": "Comfort & Style",
+      "subtitle": "Experience the Perfect Blend of Comfort and Elegance",
+      "image": "/img/Hero_Slider/images/03.jpg",
+      "link": "/comfort-style",
+      "buttonText": "Explore Collection"
+    },
+    {
+      "id": 4,
+      "title": "Outdoor Furniture",
+      "subtitle": "Create Your Ideal Outdoor Space",
+      "image": "/img/Hero_Slider/images/04.jpg",
+      "link": "/outdoor",
+      "buttonText": "Shop Outdoor"
+    },
+    {
+      "id": 5,
+      "title": "Exclusive Offers",
+      "subtitle": "Members-Only Deals and Discounts",
+      "image": "/img/Hero_Slider/images/05.jpg",
+      "link": "/exclusive-offers",
+      "buttonText": "Become a Member"
+    }
+  ]
+}
