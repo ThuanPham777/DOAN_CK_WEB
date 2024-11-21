@@ -64,7 +64,10 @@ const heroSlider = [
 ];
 // Trang chủ
 exports.getHome = async (req, res) => {
-  const products = await productService.getProducts();
+  const { products } = await productController.getAllProducts();
+  if (!Array.isArray(products)) {
+    console.log('products is not an array:', products);
+  }
   res.render('Home', { categories, heroSlider, products }); // Render trang Home
 };
 
@@ -143,17 +146,22 @@ exports.getSignup = (req, res) => {
 // viewController.js
 exports.getAllProductsView = async (req, res, next) => {
   try {
-    // Lấy bộ lọc từ query string
-    const filters = { ...req.query }; // Copy tất cả các tham số trong query
-    console.log(filters);
+    const filters = { ...req.query }; // Lấy các bộ lọc từ query string
+    const page = parseInt(req.query.page) || 1; // Lấy trang hiện tại, mặc định là trang 1
+    const limit = 6; // Giới hạn số sản phẩm mỗi trang
 
-    // Gọi productController để lấy danh sách sản phẩm
-    const products = await productController.getAllProducts(filters);
+    const { products, totalPages } = await productController.getAllProducts(
+      filters,
+      page,
+      limit
+    );
 
-    // Render trang với danh sách sản phẩm
+    // Render trang với danh sách sản phẩm và số trang
     res.render('Shop/Shop', {
       products,
       filters,
+      totalPages,
+      currentPage: page,
     });
   } catch (error) {
     console.error(error);

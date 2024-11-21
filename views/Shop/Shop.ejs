@@ -67,7 +67,7 @@
                 <div class="mb-6">
                     <h3 class="text-lg font-semibold">Manufacturer</h3>
                     <div class="flex flex-col">
-                        <% [ 'Vitra' , 'IKEA' , 'Herman Miller' , 'Hawworth' , 'Maiden Home' , 'Knoll' ,
+                        <% [ 'Vitra' , 'IKEA' , 'Herman Miller' , 'Haworth' , 'Maiden Home' , 'Knoll' ,
                             ].forEach(manufacturer=> { %>
                             <label>
                                 <input type="checkbox" name="manufacturer" value="<%= manufacturer %>"
@@ -132,21 +132,46 @@
                     </div>
                     <% }) %>
             </div>
+
+            <!-- Pagination Section -->
+            <div class="pagination mt-8">
+                <% if (currentPage> 1) { %>
+                    <a
+                        href="?page=<%= currentPage - 1 %>&<%= Object.keys(filters).map(key => key + '=' + filters[key]).join('&') %>">Previous</a>
+                    <% } %>
+
+                        <% for (let i=1; i <=totalPages; i++) { %>
+                            <a href="?page=<%= i %>&<%= Object.keys(filters).map(key => key + '=' + filters[key]).join('&') %>"
+                                class="<%= currentPage === i ? 'bg-lime-500 text-white font-bold px-4 py-2 rounded' : 'px-4 py-2 hover:bg-gray-200' %>">
+                                <%= i %>
+                            </a>
+                            <% } %>
+
+                                <% if (currentPage < totalPages) { %>
+                                    <a
+                                        href="?page=<%= currentPage + 1 %>&<%= Object.keys(filters).map(key => key + '=' + filters[key]).join('&') %>">Next</a>
+                                    <% } %>
+            </div>
         </div>
     </div>
 </div>
 
+
 <script>
+    // Hàm cập nhật URL với tham số sort và giữ lại các tham số bộ lọc khác
     function updateQueryParams(selectElement) {
         const url = new URL(window.location.href);
         const params = new URLSearchParams(url.search);
 
+        // Cập nhật tham số sort
         params.set('sort', selectElement.value);
 
+        // Giữ nguyên các tham số khác, không làm thay đổi tham số 'page'
         const newUrl = `${url.pathname}?${params.toString()}`;
         window.location.href = newUrl;
     }
 
+    // Hàm cập nhật các bộ lọc checkbox
     function updateCheckboxFilter(checkbox) {
         const url = new URL(window.location.href);
         const params = new URLSearchParams(url.search);
@@ -157,15 +182,18 @@
         if (checkbox.checked) {
             params.append(name, value);
         } else {
+            // Loại bỏ giá trị khỏi tham số khi bỏ chọn checkbox
             const values = params.getAll(name).filter((v) => v !== value);
             params.delete(name);
             values.forEach((v) => params.append(name, v));
         }
 
+        // Giữ nguyên tham số 'page' và các tham số bộ lọc khác
         const newUrl = `${url.pathname}?${params.toString()}`;
         window.location.href = newUrl;
     }
 
+    // Hàm cập nhật bộ lọc giá trị range (minPrice/maxPrice)
     function updateRangeFilter(name, value) {
         const url = new URL(window.location.href);
         const params = new URLSearchParams(url.search);
@@ -176,7 +204,44 @@
             params.delete(name);
         }
 
+        // Giữ nguyên các tham số 'page' và các bộ lọc khác
         const newUrl = `${url.pathname}?${params.toString()}`;
         window.location.href = newUrl;
     }
+
+    // Hàm quản lý phân trang và cập nhật nội dung mà không reload toàn bộ trang
+    document.addEventListener("DOMContentLoaded", function () {
+        const paginationLinks = document.querySelectorAll('.pagination a');
+
+        paginationLinks.forEach(link => {
+            link.addEventListener('click', function (event) {
+                event.preventDefault();  // Ngừng hành động mặc định của liên kết
+
+                // Lấy URL từ liên kết phân trang
+                const url = new URL(this.href);
+                const page = url.searchParams.get('page');
+
+                // Lấy các tham số hiện tại trong URL (bao gồm bộ lọc và sort)
+                const filters = url.searchParams.toString();
+
+                // Gửi yêu cầu AJAX để tải dữ liệu cho trang mới
+                fetch(url)
+                    .then(response => response.text())
+                    .then(html => {
+                        // Tạo một phần tử chứa danh sách sản phẩm từ dữ liệu mới
+                        const newProductList = document.createElement('div');
+                        newProductList.innerHTML = html;
+
+                        // Cập nhật lại danh sách sản phẩm trong container mà không làm mới trang
+                        const newProductsHTML = newProductList.querySelector('#productList').innerHTML;
+                        document.getElementById('productList').innerHTML = newProductsHTML;
+
+                        // Cập nhật lại các liên kết phân trang (nếu cần)
+                        const newPagination = newProductList.querySelector('.pagination');
+                        document.querySelector('.pagination').innerHTML = newPagination.innerHTML;
+                    })
+                    .catch(error => console.error('Error loading page:', error));
+            });
+        });
+    });
 </script>

@@ -1,5 +1,5 @@
 const Product = require('../models/productModel');
-const getProducts = async (filters = {}) => {
+const getProducts = async (filters = {}, page = 1, limit = 6) => {
   try {
     const filterConditions = {};
 
@@ -72,9 +72,18 @@ const getProducts = async (filters = {}) => {
       sortQuery = { createdAt: -1 }; // New to old
     }
 
-    // Fetch Products with filters and sorting
-    const products = await Product.find(filterConditions).sort(sortQuery);
-    return products;
+    // phân trang
+    const skip = (page - 1) * limit; // Tính số lượng sản phẩm cần bỏ qua
+    const products = await Product.find(filterConditions)
+      .skip(skip) // Bỏ qua các sản phẩm không cần thiết
+      .limit(limit) // Lấy giới hạn số lượng sản phẩm
+      .sort(sortQuery); // Sắp xếp theo điều kiện
+
+    // Trả về sản phẩm cùng với tổng số sản phẩm để hiển thị số trang
+    const totalProducts = await Product.countDocuments(filterConditions); // Tổng số sản phẩm phù hợp với điều kiện lọc
+    const totalPages = Math.ceil(totalProducts / limit); // Tính tổng số trang
+
+    return { products, totalPages };
   } catch (error) {
     console.error(error);
     throw new Error('Error retrieving products');

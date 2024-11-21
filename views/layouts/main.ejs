@@ -265,9 +265,8 @@
                                 currentParams.delete("search"); // Xóa tham số "search" nếu không có nội dung
                             }
 
-                            // Thay đổi URL mà không cần reload trang
-                            const newUrl = `${window.location.pathname}?${currentParams.toString()}`;
-                            window.history.pushState({}, "", newUrl);
+                             // Cập nhật URL mà không reload trang
+                            const newUrl = `/shop?${currentParams.toString()}`;
 
                             // Nếu cần, gửi yêu cầu tìm kiếm (ví dụ: gọi API hoặc reload trang)
                             window.location.href = newUrl; // Reload để áp dụng query params
