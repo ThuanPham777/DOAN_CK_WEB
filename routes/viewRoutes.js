@@ -18,7 +18,11 @@ router.get('/login', authController.isLoggedIn, viewController.getLogin);
 router.get('/signup', authController.isLoggedIn, viewController.getSignup);
 
 // Route Shop - Hiển thị danh sách sản phẩm
-router.get('/shop', authController.isLoggedIn, viewController.getAllProducts);
+router.get(
+  '/shop',
+  authController.isLoggedIn,
+  viewController.getAllProductsView
+);
 
 // Route Chi tiết sản phẩm
 router.get(

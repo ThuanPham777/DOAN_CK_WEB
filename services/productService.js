@@ -1,28 +1,26 @@
 const Product = require('../models/productModel');
-const getProducts = async (filters = {}, sortOption = {}) => {
+const getProducts = async (filters = {}) => {
   try {
     const filterConditions = {};
 
-    if (filters.price) {
-      const priceRange = filters.price;
-      switch (priceRange) {
-        case '$0-$100':
-          filterConditions.price = { $gte: 0, $lte: 100 };
-          break;
-        case '$100-$200':
-          filterConditions.price = { $gte: 100, $lte: 200 };
-          break;
-        case '$200-$300':
-          filterConditions.price = { $gte: 200, $lte: 300 };
-          break;
-        case 'over $300':
-          filterConditions.price = { $gte: 300 };
-          break;
-        default:
-          break;
+    // Price Filter (minPrice and maxPrice)
+    if (filters.minPrice || filters.maxPrice) {
+      const priceConditions = {};
+
+      if (filters.minPrice) {
+        priceConditions.$gte = Number(filters.minPrice); // Giá lớn hơn hoặc bằng minPrice
+      }
+      if (filters.maxPrice) {
+        priceConditions.$lte = Number(filters.maxPrice); // Giá nhỏ hơn hoặc bằng maxPrice
+      }
+
+      // Nếu có điều kiện giá, thêm vào filterConditions
+      if (Object.keys(priceConditions).length > 0) {
+        filterConditions.price = priceConditions;
       }
     }
 
+    // Category Filter
     if (filters.category) {
       filterConditions.category = {
         $in: Array.isArray(filters.category)
@@ -31,6 +29,7 @@ const getProducts = async (filters = {}, sortOption = {}) => {
       };
     }
 
+    // Manufacturer Filter
     if (filters.manufacturer) {
       filterConditions.manufacturer = {
         $in: Array.isArray(filters.manufacturer)
@@ -39,6 +38,7 @@ const getProducts = async (filters = {}, sortOption = {}) => {
       };
     }
 
+    // Material Filter
     if (filters.material) {
       filterConditions.material = {
         $in: Array.isArray(filters.material)
@@ -47,22 +47,32 @@ const getProducts = async (filters = {}, sortOption = {}) => {
       };
     }
 
+    // Search Keyword (now part of filters)
+    if (filters.search) {
+      console.log('search key: ', filters.search);
+      filterConditions.$or = [
+        { name: { $regex: filters.search, $options: 'i' } }, // Case-insensitive match in 'name'
+        { description: { $regex: filters.search, $options: 'i' } }, // Case-insensitive match in 'description'
+      ];
+    }
+
+    // Sorting (from filters)
     let sortQuery = {};
-    // Apply sorting based on the 'sort' query parameter
-    if (sortOption === 'price-asc') {
+    if (filters.sort === 'price-asc') {
       sortQuery = { price: 1 };
-    } else if (sortOption === 'price-desc') {
+    } else if (filters.sort === 'price-desc') {
       sortQuery = { price: -1 };
-    } else if (sortOption === 'name-asc') {
+    } else if (filters.sort === 'name-asc') {
       sortQuery = { name: 1 };
-    } else if (sortOption === 'name-desc') {
+    } else if (filters.sort === 'name-desc') {
       sortQuery = { name: -1 };
-    } else if (sortOption === 'createdAt-asc') {
+    } else if (filters.sort === 'createdAt-asc') {
       sortQuery = { createdAt: 1 }; // Old to new
-    } else if (sortOption === 'createdAt-desc') {
+    } else if (filters.sort === 'createdAt-desc') {
       sortQuery = { createdAt: -1 }; // New to old
     }
 
+    // Fetch Products with filters and sorting
     const products = await Product.find(filterConditions).sort(sortQuery);
     return products;
   } catch (error) {

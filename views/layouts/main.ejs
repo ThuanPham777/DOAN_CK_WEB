@@ -27,7 +27,6 @@
             <div class="text-2xl font-bold text-gray-800">
                 <a href="/" class="hover:text-lime-500 transition-colors duration-300">Furniture</a>
             </div>
-
             <!-- Navbar Links -->
             <ul class="hidden md:flex space-x-6 text-lg">
                 <li>
@@ -44,52 +43,62 @@
                 </li>
             </ul>
 
-            <!-- Action Buttons -->
-            <div class="flex items-center space-x-4">
-                <% if (locals.user) { %>
-                    <div class="relative">
-                        <!-- Avatar and Username with dropdown -->
-                        <div class="flex items-center space-x-2 cursor-pointer" onclick="toggleDropdown()">
-                            <!-- Check if avatarUrl exists, otherwise use default image -->
-                            <img src="<%= locals.user && locals.user.avatarUrl ? locals.user.avatarUrl : '/img/Users/default.jpg' %>"
-                                alt="User Avatar" class="w-8 h-8 rounded-full">
-                            <span class="text-gray-800 font-medium hidden md:block">
-                                Hello, <%= locals.user.username %>
-                            </span>
-                        </div>
-
-                        <!-- Dropdown menu -->
-                        <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md hidden">
-                            <a href="/profile" class="block px-4 py-2 text-gray-800 hover:bg-gray-200 flex items-center space-x-2">
-                                <i class="fas fa-user"></i>
-                                <span>Profile</span>
-                            </a>
-                            <a href="#" onclick="logout()" class="block px-4 py-2 text-gray-800 hover:bg-gray-200 flex items-center space-x-2">
-                                <i class="fas fa-sign-out-alt"></i>
-                                <span>Logout</span>
-                            </a>
-                        </div>
-                    </div>
-                    <% } else { %>
-                        <button onclick="window.location.href='/login'"
-                            class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 transition-all duration-300">
-                            <i class="fas fa-user"></i>
-                        </button>
-                        <% } %>
-
-                            <button
-                                class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 transition-all duration-300">
-                                <i class="fas fa-search"></i>
-                            </button>
-                            <button
-                                class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 transition-all duration-300">
-                                <i class="fas fa-heart"></i>
-                            </button>
-                            <button
-                                class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 transition-all duration-300">
-                                <i class="fas fa-shopping-cart"></i>
-                            </button>
+        <!-- Action Buttons -->
+        <div class="flex items-center space-x-4">
+            <!-- Search Input -->
+            <div class="relative flex items-center">
+                <input type="text" id="searchInput" placeholder="Search for products"
+                    value="<%= new URLSearchParams(locals.currentUrl).get('search') || '' %>"
+                class="p-2 pl-8 pr-4 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-lime-500
+                transition-all duration-300 text-gray-800"
+                onkeypress="handleSearch(event)"
+                />
+                <span class="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-500">
+                    <i class="fas fa-search"></i>
+                </span>
             </div>
+
+            <% if (locals.user) { %>
+                <div class="relative">
+                    <!-- Avatar and Username with dropdown -->
+                    <div class="flex items-center space-x-2 cursor-pointer" onclick="toggleDropdown()">
+                        <!-- Check if avatarUrl exists, otherwise use default image -->
+                        <img src="<%= locals.user && locals.user.avatarUrl ? locals.user.avatarUrl : '/img/Users/default.jpg' %>"
+                            alt="User Avatar" class="w-8 h-8 rounded-full">
+                        <span class="text-gray-800 font-medium hidden md:block">
+                            Hello, <%= locals.user.username %>
+                        </span>
+                    </div>
+
+                    <!-- Dropdown menu -->
+                    <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md hidden">
+                        <a href="/profile" class="block px-4 py-2 text-gray-800 hover:bg-gray-200 flex items-center space-x-2">
+                            <i class="fas fa-user"></i>
+                            <span>Profile</span>
+                        </a>
+                        <a href="#" onclick="logout()"
+                            class="block px-4 py-2 text-gray-800 hover:bg-gray-200 flex items-center space-x-2">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </div>
+                <% } else { %>
+                    <button onclick="window.location.href='/login'"
+                        class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 transition-all duration-300">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <% } %>
+
+                        <button
+                            class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 transition-all duration-300">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                        <button
+                            class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 transition-all duration-300">
+                            <i class="fas fa-shopping-cart"></i>
+                        </button>
+        </div>
 
             <!-- Mobile Menu Toggle -->
             <button id="menu-toggle" class="block md:hidden p-2 text-gray-800">
@@ -241,5 +250,28 @@
                         console.error('network error:', error);
                     });
             }
+
+            // Xử lý tìm kiếm khi nhấn Enter
+                 function handleSearch(event) {
+                        if (event.key === "Enter") {
+                            const searchQuery = event.target.value.trim();
+
+                            // Lấy các query params hiện tại
+                            const currentParams = new URLSearchParams(window.location.search);
+
+                            if (searchQuery) {
+                                currentParams.set("search", searchQuery); // Cập nhật hoặc thêm tham số "search"
+                            } else {
+                                currentParams.delete("search"); // Xóa tham số "search" nếu không có nội dung
+                            }
+
+                            // Thay đổi URL mà không cần reload trang
+                            const newUrl = `${window.location.pathname}?${currentParams.toString()}`;
+                            window.history.pushState({}, "", newUrl);
+
+                            // Nếu cần, gửi yêu cầu tìm kiếm (ví dụ: gọi API hoặc reload trang)
+                            window.location.href = newUrl; // Reload để áp dụng query params
+                        }
+                    }
 </script>
 </html>

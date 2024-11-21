@@ -141,20 +141,23 @@ exports.getSignup = (req, res) => {
 
 // viewController.js
 // viewController.js
-exports.getAllProducts = async (req, res, next) => {
+exports.getAllProductsView = async (req, res, next) => {
   try {
     // Lấy bộ lọc từ query string
-    const filters = req.query;
+    const filters = { ...req.query }; // Copy tất cả các tham số trong query
+    console.log(filters);
 
-    let sortOption = req.query.sort || '';
+    // Gọi productController để lấy danh sách sản phẩm
+    const products = await productController.getAllProducts(filters);
 
-    // Lấy sản phẩm đã lọc dựa trên bộ lọc
-    const products = await productService.getProducts(filters, sortOption); // Truyền filters vào service để lọc sản phẩm
-
-    // Render trang với sản phẩm và bộ lọc
-    res.render('Shop/Shop', { products, filters, sortOption: req.query });
-  } catch (err) {
-    res.status(500).send('Server error'); // Gửi lỗi 500 nếu có lỗi xảy ra
+    // Render trang với danh sách sản phẩm
+    res.render('Shop/Shop', {
+      products,
+      filters,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
   }
 };
 

@@ -1,17 +1,13 @@
 const productService = require('../services/productService'); // Service xử lý logic về sản phẩm
 
 // Lấy sản phẩm đã lọc (thực hiện qua AJAX)
-const getAllProducts = async (req, res) => {
-  const filters = req.query; // Nhận các bộ lọc từ query parameters
-
+const getAllProducts = async (filters = {}) => {
   try {
-    // Sử dụng productService để lấy các sản phẩm đã lọc
     const products = await productService.getProducts(filters);
-
-    // Trả về dữ liệu sản phẩm dưới dạng JSON
-    res.json({ products });
-  } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    return products; // Trả về danh sách sản phẩm
+  } catch (error) {
+    console.error(error);
+    throw new Error('Error retrieving products'); // Truyền lỗi lên viewController nếu có
   }
 };
 
