@@ -3,7 +3,6 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const userService = require('../services/userService');
 const crypto = require('crypto');
-const passport = require('passport');
 
 const multer = require('multer');
 const storage = multer.memoryStorage();
