@@ -3,6 +3,7 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const userService = require('../services/userService');
 const crypto = require('crypto');
+const passport = require('passport');
 
 const multer = require('multer');
 const storage = multer.memoryStorage();
@@ -29,6 +30,8 @@ router.post('/login', userController.login);
 // Xử lý đăng xuất
 router.get('/logout', userController.logout);
 
+router.get('/activate/:token', userController.activateAccount);
+
 // GET: Forgot Password Form
 router.get('/forgot-password', (req, res) => {
   res.render('auth/forgot-password', { error: null });
@@ -53,6 +56,22 @@ router.get('/reset-password/:token', async (req, res) => {
 });
 
 router.post('/reset-password/:token', userController.resetPassword);
+
+// Google Login Route
+router.get(
+  '/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+// Google Callback Route
+router.get(
+  '/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  (req, res) => {
+    // Successful login, redirect to home
+    res.redirect('/');
+  }
+);
 
 router.post(
   '/profile/edit',

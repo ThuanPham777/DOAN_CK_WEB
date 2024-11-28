@@ -11,8 +11,14 @@ const expressLayouts = require('express-ejs-layouts');
 const homeRoute = require('./app/home/homeRoute');
 const shopRoutes = require('./app/products/routes/productRoutes');
 const userRoutes = require('./app/users/routes/userRoutes');
+const apiShoppingCartRoute = require('./app/api/shoppingCart/apiShoppingCartRoute');
+const cartRoute = require('./app/cart/routes/cartRoute');
+
 const session = require('express-session');
 const passport = require('passport');
+const {
+  ensureAuthenticated,
+} = require('./middleware/auth/ensureAuthenticated');
 require('./library/passport-config')(passport); // Import Passport config
 
 const app = express();
@@ -23,8 +29,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('layout', './layouts/main');
 
 // Cấu hình EJS
-app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs'); // Sử dụng EJS làm template engine
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
@@ -91,7 +97,8 @@ app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
 });
-
+app.use('/api/cart', apiShoppingCartRoute);
+app.use('/cart', cartRoute);
 app.use('/', homeRoute);
 app.use('/shop', shopRoutes);
 app.use('/', userRoutes);

@@ -21,8 +21,12 @@ const userSchema = new mongoose.Schema(
       },
     },
     isActive: { type: Boolean, default: false }, // Trạng thái kích hoạt
+    activationToken: String,
+    activationTokenExpires: Date, // Thời gian hết hạn token
     resetPasswordToken: String,
     resetPasswordExpires: Date,
+
+    googleId: { type: String, unique: true, sparse: true }, // For Google OAuth
   },
   {
     timestamps: true,
@@ -35,6 +39,17 @@ userSchema.pre('save', async function (next) {
   this.passwordConfirm = undefined; // Không lưu trường này
   next();
 });
+
+// Tạo token kích hoạt
+userSchema.methods.createActivationToken = function () {
+  const token = crypto.randomBytes(32).toString('hex');
+  this.activationToken = crypto
+    .createHash('sha256')
+    .update(token)
+    .digest('hex');
+  this.activationTokenExpires = Date.now() + 10 * 60 * 1000; // Token hết hạn sau 10 phút
+  return token;
+};
 
 // Tạo token đặt lại mật khẩu
 userSchema.methods.createPasswordResetToken = function () {
