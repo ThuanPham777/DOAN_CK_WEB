@@ -51,33 +51,6 @@ exports.uploadAvatar = async (file) => {
   return `/img/Users/${file.originalname}`;
 };
 
-exports.sendActivationEmail = async (email, activationToken, req) => {
-  const activationURL = `${req.protocol}://${req.get(
-    'host'
-  )}/activate/${activationToken}`;
-
-  const transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
-
-  const message = {
-    to: email,
-    subject: 'Kích hoạt tài khoản của bạn',
-    html: `
-      <p>Xin chào,</p>
-      <p>Vui lòng nhấp vào liên kết dưới đây để kích hoạt tài khoản của bạn:</p>
-      <a href="${activationURL}">Kích hoạt tài khoản</a>
-      <p>Liên kết sẽ hết hạn sau 10 phút.</p>
-    `,
-  };
-
-  await transporter.sendMail(message);
-};
-
 exports.sendPasswordResetEmail = async (email, resetToken, req) => {
   // Create reset URL
   const resetURL = `${req.protocol}://${req.get(
@@ -105,14 +78,6 @@ exports.sendPasswordResetEmail = async (email, resetToken, req) => {
   };
 
   await transporter.sendMail(message);
-};
-
-// Tìm user qua activation token
-exports.findUserByActivationToken = async (hashedToken) => {
-  return await User.findOne({
-    activationToken: hashedToken,
-    activationTokenExpires: { $gt: Date.now() }, // Token phải còn hiệu lực
-  });
 };
 
 /**

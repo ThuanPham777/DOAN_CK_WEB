@@ -16,9 +16,6 @@ const cartRoute = require('./app/cart/routes/cartRoute');
 
 const session = require('express-session');
 const passport = require('passport');
-const {
-  ensureAuthenticated,
-} = require('./middleware/auth/ensureAuthenticated');
 require('./library/passport-config')(passport); // Import Passport config
 
 const app = express();
