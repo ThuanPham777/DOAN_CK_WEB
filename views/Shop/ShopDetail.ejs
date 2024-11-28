@@ -25,11 +25,22 @@
                 <h1 class="text-3xl font-bold mb-4">
                     <%= product.name %>
                 </h1>
-                <p class="text-xl text-gray-600 mb-6 leading-relaxed">
+                <p class="text-xl text-gray-600 mb-4 leading-relaxed">
                     <%= product.description %>
                 </p>
-                <p class="text-lime-500 font-bold text-2xl mb-6">$<%= product.price %>
-                </p>
+            <div class="mb-2">
+                <% if (product.salePrice) { %>
+                    <div class="flex flex-col">
+                        <p class="text-2xl text-lime-500 font-bold">$<%= product.salePrice %>
+                        </p>
+                        <p class="text-xl text-lime-500 line-through">$<%= product.price %>
+                        </p>
+                    </div>
+                    <% } else { %>
+                        <p class="text-2xl text-lime-500 font-bold">$<%= product.price %>
+                        </p>
+                        <% } %>
+            </div>
 
                 <!-- Category -->
                 <div class="flex items-center mb-4">
@@ -47,12 +58,29 @@
                     </span>
                 </div>
 
+                <!-- quantity -->
+                <div class="flex items-center gap-4 mb-6">
+                    <button id="decreaseQty" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400">
+                        -
+                    </button>
+                    <span id="productQuantity" class="text-2xl font-semibold">1</span>
+                    <button id="increaseQty" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400"
+                    >
+                        +
+                    </button>
+                </div>
                 <!-- Nút hành động -->
                 <div class="flex flex-wrap items-center gap-4">
-                    <button
-                        class="bg-lime-500 text-white px-6 py-2 rounded-lg hover:bg-lime-600 transition duration-300">
+                <% if (user) { %>
+                    <button class="bg-lime-500 text-white px-6 py-2 rounded-lg hover:bg-lime-600 transition duration-300"
+                        onclick="addToCart('<%= product._id %>')">
                         Add to Cart
                     </button>
+                    <% } else { %>
+                        <button class="bg-lime-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition duration-300">
+                            Add to Cart
+                        </button>
+                        <% } %>
                     <button
                         class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition duration-300">
                         Wishlist
@@ -60,10 +88,60 @@
                 </div>
             </div>
         </div>
+        <!--Reviews Product -->
+        <div>
+            <div class="reviews-section mt-8">
+                <h2 class="text-xl font-bold mb-4">Customer Reviews</h2>
 
+                <% if (reviews && reviews.length> 0) { %>
+                    <% reviews.forEach((review)=> { %>
+                        <div class="review-item mb-4 p-4 border border-gray-200 rounded">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center">
+                                    <!-- Avatar -->
+                                    <img src="<%= review.userId?.avatarUrl || '/img/Users/default.jpg' %>"
+                                        alt="<%= review.userId.username %>'s avatar" class="w-8 h-8 rounded-full mr-2">
+                                    <span class="font-semibold">
+                                        <%= review.userId.username %>
+                                    </span>
+                                </div>
+                                <span class="text-gray-500 text-sm">
+                                    <%= new Date(review.createdAt).toLocaleDateString() %>
+                                </span>
+                            </div>
+                            <div class="review-rating text-yellow-500 mb-2">
+                                <% for (let i=1; i <=5; i++) { %>
+                                    <% if (i <=review.rating) { %>
+                                        ★
+                                        <% } else { %>
+                                            ☆
+                                            <% } %>
+                                                <% } %>
+                            </div>
+                            <p class="review-comment text-gray-700">
+                                <%= review.comment %>
+                            </p>
+                        </div>
+                        <% }) %>
+                            <% } else { %>
+                                <p class="text-gray-500">No reviews yet. Be the first to review this product!</p>
+                                <% } %>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination mt-4">
+                <% for (let i=1; i <=totalPages; i++) { %>
+                    <a href="?page=<%= i %>"
+                        class="px-3 py-1 rounded <%= currentPage === i ? 'bg-blue-500 text-white' : 'bg-gray-200' %>">
+                        <%= i %>
+                    </a>
+                    <% } %>
+            </div>
+        </div>
+        <!-- Related Products -->
     <div class="mt-16">
         <h2 class="text-3xl font-bold mb-8">Related Products</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             <% if (products && products.length> 0) { %>
                 <% products.filter(p=> (p.category === product.category || p.manufacturer === product.manufacturer) && String(p._id) !==
                     String(product._id)).forEach(relatedProduct => { %>
@@ -109,6 +187,7 @@
 </div>
 
 <script>
+
     function changeMainImage(selectedThumbnail) {
         const mainImage = document.getElementById('mainImage');
         const images = JSON.parse(mainImage.getAttribute('data-images'));
@@ -122,4 +201,30 @@
         // Thêm lớp 'selected-thumbnail' vào ảnh được chọn
         selectedThumbnail.classList.add('selected-thumbnail');
     }
+
+     // Lấy giá trị totalStock từ server
+    const totalStock = '<%= product.totalStock %>';
+    let quantity = 1;
+
+        // Cập nhật số lượng sản phẩm
+        document.getElementById('increaseQty').addEventListener('click', () => {
+            if (quantity < totalStock) {
+                quantity++;
+                updateQuantityDisplay();
+            } else {
+                //alert(`You can only purchase up to ${totalStock} items.`);
+                document.getElementById('increaseQty').disabled = true;
+            }
+        });
+
+        document.getElementById('decreaseQty').addEventListener('click', () => {
+            if (quantity > 1) {
+                quantity--;
+                updateQuantityDisplay();
+            }
+        });
+
+        function updateQuantityDisplay() {
+            document.getElementById('productQuantity').innerText = quantity;
+        }
 </script>

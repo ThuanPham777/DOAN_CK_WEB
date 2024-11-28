@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FurnitureShop</title>
+    <title>Furnitureshop</title>
 
     <!-- Link TailwindCSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -20,103 +20,103 @@
 <body>
 
     <!-- Navbar -->
-<header>
-    <nav class="bg-white p-6 shadow-md sticky top-0 z-50">
-        <div class="container mx-auto flex items-center justify-between">
-            <!-- Logo -->
-            <div class="text-2xl font-bold text-gray-800">
-                <a href="/" class="hover:text-lime-500 transition-colors duration-300">Furniture</a>
-            </div>
-            <!-- Navbar Links -->
-            <ul class="hidden md:flex space-x-6 text-lg">
-                <li>
-                    <a href="/" class=" hover:text-lime-500 transition-colors duration-300">Home</a>
-                </li>
-                <li>
-                    <a href="/shop" class=" hover:text-lime-500 transition-colors duration-300">Shop</a>
-                </li>
-                <li>
-                    <a href="/about" class=" hover:text-lime-500 transition-colors duration-300">About</a>
-                </li>
-                <li>
-                    <a href="/contact" class=" hover:text-lime-500 transition-colors duration-300">Contact</a>
-                </li>
-            </ul>
+    <header>
+        <nav class="bg-white p-6 shadow-md sticky top-0 z-50">
+            <div class="container mx-auto flex items-center justify-between">
+                <!-- Logo -->
+                <div class="text-2xl font-bold text-gray-800">
+                    <a href="/" class="hover:text-lime-500 transition-colors duration-300">Furniture</a>
+                </div>
+                <!-- Navbar Links -->
+                <ul class="hidden md:flex space-x-6 text-lg">
+                    <li>
+                        <a href="/" class=" hover:text-lime-500 transition-colors duration-300">Home</a>
+                    </li>
+                    <li>
+                        <a href="/shop" class=" hover:text-lime-500 transition-colors duration-300">Shop</a>
+                    </li>
+                    <li>
+                        <a href="/about" class=" hover:text-lime-500 transition-colors duration-300">About</a>
+                    </li>
+                    <li>
+                        <a href="/contact" class=" hover:text-lime-500 transition-colors duration-300">Contact</a>
+                    </li>
+                </ul>
 
-        <!-- Action Buttons -->
-        <div class="flex items-center space-x-4">
-            <!-- Search Input -->
-            <div class="relative flex items-center">
-                <input type="text" id="searchInput" placeholder="Search for products"
-                    value="<%= new URLSearchParams(locals.currentUrl).get('search') || '' %>"
-                class="p-2 pl-8 pr-4 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-lime-500
-                transition-all duration-300 text-gray-800"
-                onkeypress="handleSearch(event)"
-                />
-                <span class="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-500">
-                    <i class="fas fa-search"></i>
-                </span>
-            </div>
-
-            <% if (locals.user) { %>
-                <div class="relative">
-                    <!-- Avatar and Username with dropdown -->
-                    <div class="flex items-center space-x-2 cursor-pointer" onclick="toggleDropdown()">
-                        <!-- Check if avatarUrl exists, otherwise use default image -->
-                        <img src="<%= locals.user && locals.user.avatarUrl ? locals.user.avatarUrl : '/img/Users/default.jpg' %>"
-                            alt="User Avatar" class="w-8 h-8 rounded-full">
-                        <span class="text-gray-800 font-medium hidden md:block">
-                            Hello, <%= locals.user.username %>
+                <!-- Action Buttons -->
+                <div class="flex items-center space-x-4">
+                    <!-- Search Input -->
+                    <div class="relative flex items-center">
+                        <input type="text" id="searchInput" placeholder="Search for products"
+                            value="<%= new URLSearchParams(locals.currentUrl).get('search') || '' %>" class="p-2 pl-8 pr-4 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-lime-500
+                transition-all duration-300 text-gray-800" onkeypress="handleSearch(event)" />
+                        <span onclick="handleSearchClick()"
+                            class="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-500">
+                            <i class="fas fa-search"></i>
                         </span>
                     </div>
 
-                    <!-- Dropdown menu -->
-                    <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md hidden">
-                        <a href="/profile" class="block px-4 py-2 text-gray-800 hover:bg-gray-200 flex items-center space-x-2">
-                            <i class="fas fa-user"></i>
-                            <span>Profile</span>
-                        </a>
-                        <a href="#" onclick="logout()"
-                            class="block px-4 py-2 text-gray-800 hover:bg-gray-200 flex items-center space-x-2">
-                            <i class="fas fa-sign-out-alt"></i>
-                            <span>Logout</span>
-                        </a>
-                    </div>
+                    <% if (user) { %>
+                        <div class="relative">
+                            <!-- Avatar and Username with dropdown -->
+                            <div class="flex items-center space-x-2 cursor-pointer" onclick="toggleDropdown()">
+                                <!-- Check if avatarUrl exists, otherwise use default image -->
+                                <img src="<%= user && user.avatarUrl ? user.avatarUrl : '/img/Users/default.jpg' %>"
+                                    alt="User Avatar" class="w-8 h-8 rounded-full">
+                                <span class="text-gray-800 font-medium hidden md:block">
+                                    Hello, <%= user.username %>
+                                </span>
+                            </div>
+
+                            <!-- Dropdown menu -->
+                            <div id="userDropdown"
+                                class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md hidden">
+                                <a href="/profile"
+                                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200 flex items-center space-x-2">
+                                    <i class="fas fa-user"></i>
+                                    <span>Profile</span>
+                                </a>
+                                <a href="/logout"
+                                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200 flex items-center space-x-2">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </div>
+                        </div>
+                        <% } else { %>
+                            <button onclick="window.location.href='/login'"
+                                class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 transition-all duration-300">
+                                <i class="fas fa-user"></i>
+                            </button>
+                            <% } %>
+
+                                <button
+                                    class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 transition-all duration-300">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                                <button
+                                    class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 transition-all duration-300">
+                                    <i class="fas fa-heart"></i>
+                                </button>
                 </div>
-                <% } else { %>
-                    <button onclick="window.location.href='/login'"
-                        class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 transition-all duration-300">
-                        <i class="fas fa-user"></i>
-                    </button>
-                    <% } %>
 
-                        <button
-                            class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 transition-all duration-300">
-                            <i class="fas fa-heart"></i>
-                        </button>
-                        <button
-                            class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 transition-all duration-300">
-                            <i class="fas fa-shopping-cart"></i>
-                        </button>
-        </div>
+                <!-- Mobile Menu Toggle -->
+                <button id="menu-toggle" class="block md:hidden p-2 text-gray-800">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
 
-            <!-- Mobile Menu Toggle -->
-            <button id="menu-toggle" class="block md:hidden p-2 text-gray-800">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg absolute w-full mt-2 p-4">
-            <ul class="flex flex-col space-y-4 text-lg">
-                <li><a href="/" class=" hover:text-lime-500">Home</a></li>
-                <li><a href="/shop" class=" hover:text-lime-500">Shop</a></li>
-                <li><a href="/about" class=" hover:text-lime-500">About</a></li>
-                <li><a href="/contact" class=" hover:text-lime-500">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-</header>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg absolute w-full mt-2 p-4">
+                <ul class="flex flex-col space-y-4 text-lg">
+                    <li><a href="/" class=" hover:text-lime-500">Home</a></li>
+                    <li><a href="/shop" class=" hover:text-lime-500">shop</a></li>
+                    <li><a href="/about" class=" hover:text-lime-500">about</a></li>
+                    <li><a href="/contact" class=" hover:text-lime-500">contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
 
     <!-- Main Content -->
     <main>
@@ -160,9 +160,9 @@
                     <h1 class="font-bold py-2 text-2xl title">Quick Links</h1>
                     <ul class="flex flex-col gap-3 w-fit">
                         <li class="font-bold hover:text-lime-400 cursor-pointer">Home</li>
-                        <li class="font-bold hover:text-lime-400 cursor-pointer">About</li>
-                        <li class="font-bold hover:text-lime-400 cursor-pointer">Contact</li>
-                        <li class="font-bold hover:text-lime-400 cursor-pointer">Shop</li>
+                        <li class="font-bold hover:text-lime-400 cursor-pointer">about</li>
+                        <li class="font-bold hover:text-lime-400 cursor-pointer">contact</li>
+                        <li class="font-bold hover:text-lime-400 cursor-pointer">shop</li>
                     </ul>
                 </div>
 
@@ -202,7 +202,8 @@
             </div>
 
             <!-- Footer Bottom -->
-            <div class="flex sm:flex-row justify-between items-center flex-col w-11/12 border-t border-gray-600 mx-auto py-3">
+            <div
+                class="flex sm:flex-row justify-between items-center flex-col w-11/12 border-t border-gray-600 mx-auto py-3">
                 <h4 class="flex items-center font-semibold">
                     <i class="fa fa-copyright"></i> All rights reserved Furniture 2024.
                 </h4>
@@ -223,54 +224,54 @@
         mobileMenu.classList.toggle('hidden');
     });
 
-     // Function to toggle the visibility of the dropdown menu
-        function toggleDropdown() {
-            var dropdown = document.getElementById('userDropdown');
-            dropdown.classList.toggle('hidden');
-        }
+    // Function to toggle the visibility of the dropdown menu
+    function toggleDropdown() {
+        var dropdown = document.getElementById('userDropdown');
+        dropdown.classList.toggle('hidden');
+    }
 
-        function logout() {
-                // Gửi yêu cầu POST đến '/logout'
-                fetch('/api/auth/logout', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({}) // Bạn có thể truyền thêm dữ liệu nếu cần
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            // Chuyển hướng người dùng sau khi logout thành công
-                            window.location.href = '/login'; // Hoặc trang chủ '/'
-                        } else {
-                            console.error('error during logout');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('network error:', error);
-                    });
+    // Xử lý tìm kiếm khi nhấn Enter
+    function handleSearch(event) {
+        if (event.key === "Enter") {
+            const searchQuery = event.target.value.trim();
+
+            // Lấy các query params hiện tại
+            const currentParams = new URLSearchParams(window.location.search);
+
+            if (searchQuery) {
+                currentParams.set("search", searchQuery); // Cập nhật hoặc thêm tham số "search"
+            } else {
+                currentParams.delete("search"); // Xóa tham số "search" nếu không có nội dung
             }
 
-            // Xử lý tìm kiếm khi nhấn Enter
-                 function handleSearch(event) {
-                        if (event.key === "Enter") {
-                            const searchQuery = event.target.value.trim();
+            // Cập nhật URL mà không reload trang
+            const newUrl = `/shop?${currentParams.toString()}`;
 
-                            // Lấy các query params hiện tại
-                            const currentParams = new URLSearchParams(window.location.search);
+            // Nếu cần, gửi yêu cầu tìm kiếm (ví dụ: gọi API hoặc reload trang)
+            window.location.href = newUrl; // Reload để áp dụng query params
+        }
+    }
 
-                            if (searchQuery) {
-                                currentParams.set("search", searchQuery); // Cập nhật hoặc thêm tham số "search"
-                            } else {
-                                currentParams.delete("search"); // Xóa tham số "search" nếu không có nội dung
-                            }
+    function handleSearchClick() {
+        const searchInput = document.getElementById("searchInput");
+        const searchQuery = searchInput.value.trim();
 
-                             // Cập nhật URL mà không reload trang
-                            const newUrl = `/shop?${currentParams.toString()}`;
+        // Lấy các query params hiện tại
+        const currentParams = new URLSearchParams(window.location.search);
 
-                            // Nếu cần, gửi yêu cầu tìm kiếm (ví dụ: gọi API hoặc reload trang)
-                            window.location.href = newUrl; // Reload để áp dụng query params
-                        }
-                    }
+        if (searchQuery) {
+            currentParams.set("search", searchQuery); // Cập nhật hoặc thêm tham số "search"
+        } else {
+            currentParams.delete("search"); // Xóa tham số "search" nếu không có nội dung
+        }
+
+        // Cập nhật URL mà không reload trang
+        const newUrl = `/shop?${currentParams.toString()}`;
+
+        // Reload để áp dụng query params
+        window.location.href = newUrl;
+    }
+
 </script>
+
 </html>

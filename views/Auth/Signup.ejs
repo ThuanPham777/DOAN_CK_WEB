@@ -1,9 +1,22 @@
-<!-- Signup Form Container -->
+<!-- signup Form Container -->
 <div class="w-full max-w-md my-6 mx-auto bg-white shadow-md rounded-lg p-6">
     <h1 class="text-2xl font-bold text-gray-800 text-center mb-6">Create an Account</h1>
 
-    <!-- Signup Form -->
-    <form id="signupForm" class="space-y-4">
+    <% if (typeof message !== 'undefined' && message) { %>
+        <div class="text-center mb-4 p-3 rounded-lgbg-green-100 text-green-600">
+            <p class="font-medium ">
+                <%= message %>
+            </p>
+        </div>
+        <% } %>
+
+    <!-- Error Message (if exists) -->
+    <div id="errorMessage" class="text-red-600 text-center mb-4 hidden">
+        <p id="errorText" class="font-medium"></p>
+    </div>
+
+    <!-- signup Form -->
+    <form id="signupForm" action="/signup" method="POST" class="space-y-4">
         <!-- Username -->
         <div>
             <label for="username" class="block text-gray-700 font-medium">Username</label>
@@ -32,54 +45,23 @@
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-green-200">
         </div>
 
-        <!-- Signup Button -->
+        <!-- signup Button -->
         <button type="submit"
             class="w-full bg-lime-500 text-white py-2 rounded-lg font-semibold hover:bg-lime-600 transition duration-300">
             Sign Up
         </button>
     </form>
 
-    <!-- Already have an account -->
-    <p class="text-sm text-center text-gray-600 mt-4">
-        Already have an account? <a href="/login" class="text-lime-500 hover:underline">Log In</a>
-    </p>
+    <!-- Display error message if exists -->
+    <% if (typeof error !== 'undefined' && error) { %>
+        <script>
+            document.getElementById('errorText').textContent = "<%= error %>";
+            document.getElementById('errorMessage').classList.remove('hidden');
+        </script>
+        <% } %>
+
+            <!-- Already have an account -->
+            <p class="text-sm text-center text-gray-600 mt-4">
+                Already have an account? <a href="/login" class="text-lime-500 hover:underline">Log In</a>
+            </p>
 </div>
-
-<script>
-    document.getElementById("signupForm").addEventListener("submit", async function (event) {
-        event.preventDefault();  // Ngăn không cho form tự động submit và làm mới trang
-
-        const username = document.getElementById("username").value;
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-        const passwordConfirm = document.getElementById("passwordConfirm").value;
-
-        // Kiểm tra xác nhận mật khẩu
-        if (password !== passwordConfirm) {
-            alert("Passwords do not match!");
-            return;
-        }
-
-        try {
-            const response = await fetch('/api/auth/signup', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, email, password, passwordConfirm }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                alert('Signup successful!');  // Thông báo đăng ký thành công
-                window.location.href = '/';  // Chuyển hướng đến trang login
-            } else {
-                const errorData = await response.json();
-                alert(errorData.message);  // Hiển thị lỗi nếu đăng ký thất bại
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('An error occurred. Please try again later.');
-        }
-    });
-</script>

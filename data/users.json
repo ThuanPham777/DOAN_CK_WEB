@@ -5,8 +5,7 @@
     "email": "alice@example.com",
     "password": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet.",
     "role": "user",
-    "avatarUrl": "/img/Users/avatar1.jpg",
-    "passwordConfirm": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet."
+    "avatarUrl": "/img/Users/avatar1.jpg"
   },
   {
     "_id": "672d969368280455688a4530",
@@ -14,8 +13,7 @@
     "email": "john@example.com",
     "password": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet.",
     "role": "user",
-    "avatarUrl": "/img/Users/avatar2.jpg",
-    "passwordConfirm": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet."
+    "avatarUrl": "/img/Users/avatar2.jpg"
   },
   {
     "_id": "672d969368280455688a4531",
@@ -23,8 +21,7 @@
     "email": "emily@example.com",
     "password": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet.",
     "role": "user",
-    "avatarUrl": "/img/Users/avatar3.jpg",
-    "passwordConfirm": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet."
+    "avatarUrl": "/img/Users/avatar3.jpg"
   },
   {
     "_id": "672d969368280455688a4532",
@@ -32,8 +29,7 @@
     "email": "david@example.com",
     "password": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet.",
     "role": "user",
-    "avatarUrl": "/img/Users/avatar4.jpg",
-    "passwordConfirm": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet."
+    "avatarUrl": "/img/Users/avatar4.jpg"
   },
   {
     "_id": "672d969368280455688a4533",
@@ -41,8 +37,7 @@
     "email": "sophia@example.com",
     "password": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet.",
     "role": "user",
-    "avatarUrl": "/img/Users/avatar5.jpg",
-    "passwordConfirm": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet."
+    "avatarUrl": "/img/Users/avatar5.jpg"
   },
   {
     "_id": "672d969368280455688a4534",
@@ -50,8 +45,7 @@
     "email": "michael@example.com",
     "password": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet.",
     "role": "user",
-    "avatarUrl": "/img/Users/avatar6.jpg",
-    "passwordConfirm": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet."
+    "avatarUrl": "/img/Users/avatar6.jpg"
   },
   {
     "_id": "672d969368280455688a4535",
@@ -59,8 +53,7 @@
     "email": "olivia@example.com",
     "password": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet.",
     "role": "user",
-    "avatarUrl": "/img/Users/avatar7.jpg",
-    "passwordConfirm": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet."
+    "avatarUrl": "/img/Users/avatar7.jpg"
   },
   {
     "_id": "672d969368280455688a4536",
@@ -68,8 +61,7 @@
     "email": "james@example.com",
     "password": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet.",
     "role": "user",
-    "avatarUrl": "/img/Users/avatar8.jpg",
-    "passwordConfirm": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet."
+    "avatarUrl": "/img/Users/avatar8.jpg"
   },
   {
     "_id": "672d969368280455688a4537",
@@ -77,8 +69,7 @@
     "email": "emma@example.com",
     "password": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet.",
     "role": "user",
-    "avatarUrl": "/img/Users/avatar9.jpg",
-    "passwordConfirm": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet."
+    "avatarUrl": "/img/Users/avatar9.jpg"
   },
   {
     "_id": "672d969368280455688a4538",
@@ -86,8 +77,7 @@
     "email": "william@example.com",
     "password": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet.",
     "role": "user",
-    "avatarUrl": "/img/Users/avatar10.jpg",
-    "passwordConfirm": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet."
+    "avatarUrl": "/img/Users/avatar10.jpg"
   },
   {
     "_id": "672d969368280455688a4539",
@@ -95,8 +85,7 @@
     "email": "charlotte@example.com",
     "password": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet.",
     "role": "user",
-    "avatarUrl": "/img/Users/avatar11.jpg",
-    "passwordConfirm": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet."
+    "avatarUrl": "/img/Users/avatar11.jpg"
   },
   {
     "_id": "672d969368280455688a453a",
@@ -104,8 +93,7 @@
     "email": "henry@example.com",
     "password": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet.",
     "role": "user",
-    "avatarUrl": "/img/Users/avatar12.jpg",
-    "passwordConfirm": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet."
+    "avatarUrl": "/img/Users/avatar12.jpg"
   },
   {
     "_id": "672d969368280455688a453b",
@@ -113,8 +101,7 @@
     "email": "amelia@example.com",
     "password": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet.",
     "role": "user",
-    "avatarUrl": "/img/Users/avatar13.jpg",
-    "passwordConfirm": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet."
+    "avatarUrl": "/img/Users/avatar13.jpg"
   },
   {
     "_id": "672d969368280455688a453c",
@@ -122,8 +109,7 @@
     "email": "ethan@example.com",
     "password": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet.",
     "role": "user",
-    "avatarUrl": "/img/Users/avatar14.jpg",
-    "passwordConfirm": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet."
+    "avatarUrl": "/img/Users/avatar14.jpg"
   },
   {
     "_id": "672d969368280455688a453d",
@@ -131,8 +117,7 @@
     "email": "mia@example.com",
     "password": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet.",
     "role": "user",
-    "avatarUrl": "/img/Users/avatar15.jpg",
-    "passwordConfirm": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet."
+    "avatarUrl": "/img/Users/avatar15.jpg"
   },
   {
     "_id": "672d969368280455688a453e",
@@ -140,8 +125,7 @@
     "email": "alexander@example.com",
     "password": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet.",
     "role": "user",
-    "avatarUrl": "/img/Users/avatar16.jpg",
-    "passwordConfirm": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet."
+    "avatarUrl": "/img/Users/avatar16.jpg"
   },
   {
     "_id": "672d969368280455688a453f",
@@ -149,8 +133,7 @@
     "email": "isabella@example.com",
     "password": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet.",
     "role": "user",
-    "avatarUrl": "/img/Users/avatar17.jpg",
-    "passwordConfirm": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet."
+    "avatarUrl": "/img/Users/avatar17.jpg"
   },
   {
     "_id": "672d969368280455688a4540",
@@ -158,8 +141,7 @@
     "email": "daniel@example.com",
     "password": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet.",
     "role": "user",
-    "avatarUrl": "/img/Users/avatar18.jpg",
-    "passwordConfirm": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet."
+    "avatarUrl": "/img/Users/avatar18.jpg"
   },
   {
     "_id": "672e45848d69a1fcf7f2203b",
@@ -167,8 +149,7 @@
     "email": "harper@example.com",
     "password": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet.",
     "role": "user",
-    "avatarUrl": "/img/Users/avatar19.jpg",
-    "passwordConfirm": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet."
+    "avatarUrl": "/img/Users/avatar19.jpg"
   },
   {
     "_id": "672e45c78d69a1fcf7f2203c",
@@ -176,7 +157,6 @@
     "email": "jackson@example.com",
     "password": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet.",
     "role": "user",
-    "avatarUrl": "/img/Users/avatar20.jpg",
-    "passwordConfirm": "$2b$10$U84ta1i8o2pApsrf3M/HleqKMvb6fwIBTiR9DsGlPmxIhHxeJCet."
+    "avatarUrl": "/img/Users/avatar20.jpg"
   }
 ]
