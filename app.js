@@ -23,8 +23,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('layout', './layouts/main');
 
 // Cấu hình EJS
-app.set('view engine', 'ejs'); // Sử dụng EJS làm template engine
 app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs'); // Sử dụng EJS làm template engine
 
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
