@@ -14,6 +14,7 @@ const userRoutes = require('./app/users/routes/userRoutes');
 const apiShoppingCartRoute = require('./app/api/shoppingCart/apiShoppingCartRoute');
 const cartRoute = require('./app/cart/routes/cartRoute');
 const orderRoutes = require('./app/order/routes/orderRoutes');
+const MongooseStore = require('connect-mongo');
 
 const session = require('express-session');
 const passport = require('passport');
@@ -80,6 +81,9 @@ app.use(
     secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: false,
+    store: MongooseStore.create({
+      mongoUrl: process.env.DATABASE_URL,
+    }),
     cookie: {
       secure: false, // Đặt thành `true` nếu dùng HTTPS
       maxAge: 3600000, // Thời gian tồn tại cookie (1 giờ)
